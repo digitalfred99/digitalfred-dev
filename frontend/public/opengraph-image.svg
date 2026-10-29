@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101B2A"/>
+      <stop offset="1" stop-color="#17283B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#42D4FA"/>
+      <stop offset="1" stop-color="#159BCB"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="0" cy="0" r="1" gradientTransform="matrix(0 370 -440 0 1048 270)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#159BCB" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#159BCB" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#aura)"/>
+  <path d="M0 562H1200" stroke="#F7FAFF" stroke-opacity=".1"/>
+  <path d="M64 64h38v38" stroke="#27C4F4" stroke-width="2" stroke-opacity=".55"/>
+  <path d="M1136 566h-38v-38" stroke="#27C4F4" stroke-width="2" stroke-opacity=".55"/>
+
+  <g transform="translate(82 73) scale(.12)">
+    <rect width="461" height="461" rx="42" fill="#050505"/>
+    <g stroke="#fff" stroke-width="7" stroke-linecap="square">
+      <path d="M110 121v-17h17"/>
+      <path d="M351 104h17v17"/>
+      <path d="M127 393h-17v-17"/>
+      <path d="M368 376v17h-17"/>
+    </g>
+    <g transform="translate(-18.5 -4) translate(257.5 252.5) scale(.88) translate(-257.5 -252.5)">
+      <path d="M141 147h81c42 0 66 23 66 65v81c0 42-24 65-66 65h-81c-7 0-10-4-10-11v-52l45-17v36h40V185h-40v36l-45-17v-46c0-7 3-11 10-11Z" fill="#19C5DE"/>
+      <path d="M263 147h112c7 0 10 4 9 11l-5 26h-67v44h59l-5 42h-54v88h-50c17-11 25-32 25-62v-87c0-31-8-51-24-62Z" fill="#fff"/>
+    </g>
+  </g>
+  <text x="154" y="114" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="750" letter-spacing="-1.7">Digital</text>
+  <text x="264" y="114" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="500" letter-spacing="-1.7">Fred</text>
+  <rect x="360" y="99" width="6" height="6" rx="1" fill="#19C5DE"/>
+  <text x="84" y="155" fill="#91A4B8" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="3.3">SOFTWARE DEVELOPER</text>
+
+  <text x="80" y="286" fill="#F7FAFF" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" letter-spacing="-2.7">DigitalFred</text>
+  <text x="83" y="327" fill="#7EDFFC" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600" letter-spacing="1.2">SOFTWARE DEVELOPER</text>
+  <text x="83" y="389" fill="#E0E8F0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="400" letter-spacing="-.45">Building Digital Experiences</text>
+  <text x="83" y="425" fill="#E0E8F0" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="400" letter-spacing="-.45">That Work.</text>
+  <path d="M84 467h56" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+  <text x="84" y="522" fill="#91A4B8" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" letter-spacing="1.8">THOUGHTFUL ENGINEERING. MEANINGFUL IMPACT.</text>
+  <text x="84" y="588" fill="#91A4B8" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="2">DESIGN · BUILD · DELIVER</text>
+
+  <g transform="translate(715 162) scale(.73)">
+    <circle cx="230" cy="230" r="212" stroke="#F7FAFF" stroke-opacity=".11"/>
+    <circle cx="230" cy="230" r="174" stroke="#F7FAFF" stroke-opacity=".1"/>
+    <circle cx="230" cy="230" r="136" stroke="#19C5DE" stroke-opacity=".3"/>
+    <g transform="translate(0 0) scale(1)">
+      <rect x="0" y="0" width="461" height="461" rx="42" fill="#050505"/>
+      <g stroke="#fff" stroke-width="8" stroke-linecap="square">
+        <path d="M110 121v-17h17"/>
+        <path d="M351 104h17v17"/>
+        <path d="M127 393h-17v-17"/>
+        <path d="M368 376v17h-17"/>
+      </g>
+      <g transform="translate(-18.5 -4) translate(257.5 252.5) scale(.88) translate(-257.5 -252.5)">
+        <path d="M141 147h81c42 0 66 23 66 65v81c0 42-24 65-66 65h-81c-7 0-10-4-10-11v-52l45-17v36h40V185h-40v36l-45-17v-46c0-7 3-11 10-11Z" fill="#19C5DE"/>
+        <path d="M263 147h112c7 0 10 4 9 11l-5 26h-67v44h59l-5 42h-54v88h-50c17-11 25-32 25-62v-87c0-31-8-51-24-62Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "Fieldnotes Studio by DigitalFred",
+  "short_name": "Fieldnotes",
+  "description": "A considered workspace for proposals, projects, and client relationships.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7faff",
+  "theme_color": "#101b2a",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

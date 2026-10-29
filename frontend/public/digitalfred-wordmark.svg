@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="424" height="96" viewBox="0 0 424 96" fill="none">
+  <rect width="96" height="96" rx="9" fill="#050505"/>
+  <g stroke="#fff" stroke-width="2.1" stroke-linecap="square">
+    <path d="M23 25v-5h5"/>
+    <path d="M73 20h5v5"/>
+    <path d="M28 82h-5v-5"/>
+    <path d="M78 77v5h-5"/>
+  </g>
+  <g transform="translate(-3.35 -.85) translate(53.85 51.85) scale(.84) translate(-53.85 -51.85)">
+    <path d="M29.5 29.5h17c8.8 0 13.8 4.8 13.8 13.6v17c0 8.8-5 13.6-13.8 13.6h-17c-1.4 0-2.1-.8-2.1-2.3V60.5l9.4-3.5v7.5h8.4V37.7h-8.4v7.5l-9.4-3.5v-9.9c0-1.5.7-2.3 2.1-2.3Z" fill="#19C5DE"/>
+    <path d="M55 29.5h23.4c1.5 0 2.1.8 1.9 2.3l-1 5.4h-14v9.2h12.3l-1 8.8H65.3v18.5H54.8c3.5-2.3 5.2-6.7 5.2-13V42.5c0-6.5-1.7-10.7-5-13Z" fill="#fff"/>
+  </g>
+  <text x="116" y="61" fill="#101B2A" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="750" letter-spacing="-1.7">Digital</text>
+  <text x="230" y="61" fill="#101B2A" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="500" letter-spacing="-1.7">Fred</text>
+  <rect x="326" y="54" width="6" height="6" rx="1" fill="#19C5DE"/>
+</svg>
