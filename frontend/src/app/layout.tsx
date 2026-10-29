@@ -14,7 +14,7 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://digitalfred-dev.vercel.app"),
   title: {
     default: "Fieldnotes Studio - DigitalFred | Software Developer",
     template: "%s | DigitalFred",
