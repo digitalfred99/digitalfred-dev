@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./client-intake.css";
 
 export const metadata: Metadata = {
   title: "Client details",
