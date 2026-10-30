@@ -84,7 +84,7 @@ export function renderDocument(d: DocModel): string {
   const bizLines = [biz.address, [biz.email, biz.phone].filter(Boolean).join(" · "), biz.website, biz.registrationNumber ? `Reg. no. ${biz.registrationNumber}` : "", biz.taxNumber ? `Tax no. ${biz.taxNumber}` : ""].filter(Boolean);
   const footerLeft = `${d.title}${d.meta.find(([k]) => k === "Reference") ? " · " + d.meta.find(([k]) => k === "Reference")![1] : ""}`.replace(/[^\p{L}\p{N} \-_.:·,]/gu, "");
   return `<!doctype html><html lang="${esc(d.lang ?? "en")}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(d.title)}</title><style>:root{--footer-left:"${footerLeft}"}${CSS(accent)}</style></head><body>
-<div class="bar noprint"><button onclick="window.print()">Print / Save as PDF</button><span>Tip: choose “Save as PDF”, A4, and turn on background graphics.</span></div>
+<div class="bar noprint"><button type="button" onclick="window.print()">Print</button><span>To save a PDF, choose “Save as PDF” in the print dialog.</span></div>
 ${d.watermark ? `<div class="wm">${esc(d.watermark)}</div>` : ""}
 <div class="page"><header class="top"><div><h1>${esc(d.title)}</h1>${d.subtitle ? `<div class="sub">${esc(d.subtitle)}</div>` : ""}</div>
 <div class="biz">${biz.logoDataUrl && /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(biz.logoDataUrl) ? `<img src="${biz.logoDataUrl}" alt="">` : ""}${esc(biz.name)}${bizLines.map((l) => `<small>${esc(l)}</small>`).join("")}</div></header>

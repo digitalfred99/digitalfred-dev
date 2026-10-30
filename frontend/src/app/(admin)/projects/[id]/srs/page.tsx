@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
+import { downloadDocument, printDocument } from "@/lib/document-actions";
 import { EmptyState, FormField, useToast } from "@/components/ui";
 import type { Section } from "@/types/api";
 
@@ -23,6 +24,7 @@ export default function SrsEditorPage() {
   const [bump, setBump] = useState<"minor" | "major">("minor");
   const [previewHtml, setPreviewHtml] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const previewFrame = useRef<HTMLIFrameElement>(null);
   const toast = useToast();
 
   async function load() {
@@ -137,6 +139,6 @@ export default function SrsEditorPage() {
       </form>
     </section>
     <section className="card section-space"><div className="card-heading"><div><h2>Requirements table</h2><p>These project requirements are included in each created document version.</p></div></div>{/* The requirements are managed in the project workspace. */}<Link className="button button-quiet button-small" href={`/projects/${encodeURIComponent(id)}?tab=requirements`}>Manage project requirements</Link></section>
-    {previewOpen && <div className="document-overlay"><div className="document-toolbar"><strong>Document preview</strong><button className="button button-quiet button-small" onClick={() => setPreviewOpen(false)}>Close preview</button></div><iframe title="Requirements document preview" sandbox="" srcDoc={previewHtml} /></div>}
+    {previewOpen && <div className="document-overlay"><div className="document-toolbar"><strong>Document preview</strong><div className="button-row"><button className="button button-quiet button-small" onClick={() => downloadDocument(previewHtml, document?.title || "requirements-document")}>Save a copy</button><button className="button button-quiet button-small" onClick={() => { try { printDocument(previewFrame.current); } catch (issue) { setError(issue instanceof Error ? issue.message : "The document could not be printed."); } }}>Print</button><button className="button button-quiet button-small" onClick={() => setPreviewOpen(false)}>Close preview</button></div></div><iframe ref={previewFrame} title="Requirements document preview" sandbox="allow-scripts allow-modals" srcDoc={previewHtml} /></div>}
   </div>;
 }

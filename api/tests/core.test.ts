@@ -223,6 +223,8 @@ test("snapshot never contains internal notes or hidden sections, and is hash-sta
 import { renderDocument, mdToHtml } from "../src/lib/documents/render";
 test("document renderer escapes HTML and renders lists", () => {
   const html = renderDocument({ title: "<script>alert(1)</script>", business: { name: "B<b>" , logoDataUrl: "javascript:alert(1)" }, meta: [["Reference", "X\"Y"]], blocks: [{ type: "md", text: "- a <img src=x onerror=1>\n- b\n\n**bold** text" }, { type: "table", head: ["A"], rows: [["<i>"]] }] });
+  assert.ok(html.includes('<button type="button" onclick="window.print()">Print</button>'));
+  assert.ok(html.includes("To save a PDF, choose “Save as PDF” in the print dialog."));
   assert.ok(!html.includes("<script>alert")); assert.ok(!html.includes("<img src=x")); assert.ok(!html.includes("javascript:"));
   assert.ok(html.includes("<li>a &lt;img")); assert.ok(html.includes("<strong>bold</strong>"));
   assert.match(mdToHtml("1. one\n2. two"), /<ol>/);

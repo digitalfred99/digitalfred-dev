@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import { formatMoney, parseMoneyInput } from "@/lib/money";
+import { downloadDocument, printDocument } from "@/lib/document-actions";
 import { ConfirmDialog, EmptyState, FormField, useToast } from "@/components/ui";
 import { StatusBadge } from "@/components/status-badge";
 import type { BillingPeriod, PricingInput, PricingResult, ProposalDraft, ProposalStatus, Readiness, Section, ServiceItem, ServiceOption } from "@/types/api";
@@ -73,6 +74,7 @@ export default function ProposalBuilderPage() {
   const [publishedLinkUrl, setPublishedLinkUrl] = useState("");
   const [documentHtml, setDocumentHtml] = useState("");
   const [documentTitle, setDocumentTitle] = useState("");
+  const documentFrame = useRef<HTMLIFrameElement>(null);
   const [compareFrom, setCompareFrom] = useState("");
   const [compareTo, setCompareTo] = useState("");
   const [compareResult, setCompareResult] = useState("");
@@ -322,7 +324,7 @@ export default function ProposalBuilderPage() {
     </section>
     <div className="section-space">{data.allowedTransitions.map((target) => <button className="button button-quiet button-small" key={target} disabled={busy} onClick={() => setConfirm({ title: `Move proposal to ${target.replaceAll("_", " ")}?`, description: "This status change is controlled by the server lifecycle.", action: () => void transition(target) })}>{target.replaceAll("_", " ")}</button>)}</div>
     <ConfirmDialog open={Boolean(confirm)} title={confirm?.title || ""} description={confirm?.description || ""} destructive={confirm?.title.toLowerCase().includes("revoke") || confirm?.title.toLowerCase().includes("remove") || confirm?.title.toLowerCase().includes("delete")} onCancel={() => setConfirm(null)} onConfirm={() => { confirm?.action(); setConfirm(null); }} />
-    {documentHtml && <div className="document-overlay"><div className="document-toolbar"><strong>{documentTitle}</strong><button className="button button-quiet button-small" onClick={() => setDocumentHtml("")}>Close preview</button></div><iframe title={documentTitle} sandbox="" srcDoc={documentHtml} /></div>}
+    {documentHtml && <div className="document-overlay"><div className="document-toolbar"><strong>{documentTitle}</strong><div className="button-row"><button className="button button-quiet button-small" onClick={() => downloadDocument(documentHtml, `${proposal.reference}-${documentTitle}`)}>Save a copy</button><button className="button button-quiet button-small" onClick={() => { try { printDocument(documentFrame.current); } catch (issue) { setError(issue instanceof Error ? issue.message : "The document could not be printed."); } }}>Print</button><button className="button button-quiet button-small" onClick={() => setDocumentHtml("")}>Close preview</button></div></div><iframe ref={documentFrame} title={documentTitle} sandbox="allow-scripts allow-modals" srcDoc={documentHtml} /></div>}
   </div>;
 }
 
