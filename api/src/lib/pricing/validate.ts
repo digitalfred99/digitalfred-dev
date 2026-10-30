@@ -31,7 +31,7 @@ export function sanitizePricing(raw: unknown, fallbackCurrency: string): Pricing
       const kind = oneOf(p.kind, "kind", ["percent", "fixed"] as const);
       return {
         id: id(p.id), label: str(p.label, "label", { max: 200 }), kind,
-        percentBps: kind === "percent" ? int(p.percentBps, "percentBps", { min: 0, max: 10000 }) : null,
+        percentBps: kind === "percent" && p.percentBps != null ? int(p.percentBps, "percentBps", { min: 0, max: 10000 }) : null,
         amountMinor: kind === "fixed" ? minorOrNull(p.amountMinor, "amountMinor") : null,
         trigger: oneOf(p.trigger, "trigger", ["before_development", "on_milestone", "on_delivery", "on_acceptance_handover", "custom"] as const),
         condition: str(p.condition, "condition", { optional: true, max: 1000 }),

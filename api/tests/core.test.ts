@@ -147,6 +147,9 @@ test("sanitizePricing drops unknown keys and rejects bad input", () => {
   const clean = sanitizePricing({ currency: "GHS", hacked: 1, implementationFee: { amountMinor: 100, confirmed: true }, services: [{ name: "S", options: [{ period: "monthly", amountMinor: 5, confirmed: true }] }] }, "GHS");
   assert.equal((clean as any).hacked, undefined);
   assert.equal(clean.services[0].options[0].currency, "GHS");
+  const incompletePayment = sanitizePricing({ paymentSchedule: [{ label: "Deposit", kind: "percent", trigger: "before_development" }] }, "GHS");
+  assert.equal(incompletePayment.paymentSchedule[0].percentBps, null);
+  assert.throws(() => sanitizePricing({ paymentSchedule: [{ label: "Deposit", kind: "percent", percentBps: 25.5, trigger: "before_development" }] }, "GHS"));
   assert.throws(() => sanitizePricing({ implementationFee: { amountMinor: 1.5 } }, "GHS"));
   assert.throws(() => sanitizePricing({ implementationFee: { amountMinor: -5 } }, "GHS"));
   assert.throws(() => sanitizePricing({ currency: "ghs" }, "GHS"));
