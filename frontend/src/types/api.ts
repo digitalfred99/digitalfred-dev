@@ -226,7 +226,15 @@ export interface ProposalSnapshot {
     contentHash: string;
     title: string;
     sections: Pick<Section, "id" | "key" | "title" | "body">[];
-    requirements: unknown[];
+    requirements: {
+      code: string;
+      kind: string;
+      title: string;
+      description: string;
+      priority: string;
+      dependencies: string[];
+      acceptanceCriteria: string[];
+    }[];
   };
 }
 
