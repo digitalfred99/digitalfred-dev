@@ -41,6 +41,7 @@ export function PortalClient({ token }: { token: string }) {
   const [notice, setNotice] = useState("");
   const noticeRef = useRef<HTMLDivElement>(null);
   const [documentHtml, setDocumentHtml] = useState("");
+  const [documentTitle, setDocumentTitle] = useState("Proposal document");
   const documentFrame = useRef<HTMLIFrameElement>(null);
   const [selectionPreview, setSelectionPreview] = useState<SelectionPreview | null>(null);
   const [selectedServices, setSelectedServices] = useState<Record<string, string>>({});
@@ -62,6 +63,11 @@ export function PortalClient({ token }: { token: string }) {
     api.publicGet<PortalData>(`/public/proposals/${encodeURIComponent(token)}`).then((result) => {
       if (!active) return;
       setData(result);
+      setRequestForm((current) => ({
+        ...current,
+        name: result.proposal.client.contactName || result.proposal.client.displayName || "",
+        email: result.proposal.client.email || "",
+      }));
       setSelectedServices(Object.fromEntries(result.proposal.pricing.services.filter((service) => service.clientSelectable && service.selectedOptionId).map((service) => [service.id, service.selectedOptionId as string])));
       const selectedPackage = result.proposal.pricing.maintenancePackages.find((item) => item.clientSelectable && item.selected);
       setSelectedMaintenance(selectedPackage?.id ?? "");
@@ -150,7 +156,10 @@ export function PortalClient({ token }: { token: string }) {
   }
   async function openDocument(kind: typeof DOCUMENT_KINDS[number]) {
     setError("");
-    try { setDocumentHtml(await api.publicGet<string>(`/public/proposals/${encodeURIComponent(token)}/document?kind=${encodeURIComponent(kind)}`)); }
+    try {
+      setDocumentHtml(await api.publicGet<string>(`/public/proposals/${encodeURIComponent(token)}/document?kind=${encodeURIComponent(kind)}`));
+      setDocumentTitle(kind.replaceAll("_", " "));
+    }
     catch (issue) { setError(issue instanceof ApiError ? issue.message : "The document could not be opened."); }
   }
 
@@ -202,7 +211,7 @@ export function PortalClient({ token }: { token: string }) {
       {(action === "question" || action === "change") && <form className="portal-form" onSubmit={(event) => void submitRequest(event)}><div className="portal-form-grid">{action === "change" && <label className="portal-field"><span>Request type</span><select value={requestForm.kind} onChange={(event) => setRequestForm({ ...requestForm, kind: event.target.value })}>{CHANGE_KINDS.map((kind) => <option key={kind} value={kind}>{kind.replaceAll("_", " ")}</option>)}</select></label>}<PortalField label="Your name" value={requestForm.name} onChange={(name) => setRequestForm({ ...requestForm, name })} required /><PortalField label="Email address" type="email" value={requestForm.email} onChange={(email) => setRequestForm({ ...requestForm, email })} required /></div><PortalField label="Subject" value={requestForm.subject} onChange={(subject) => setRequestForm({ ...requestForm, subject })} required /><label className="portal-field"><span>Message</span><textarea required value={requestForm.message} onChange={(event) => setRequestForm({ ...requestForm, message: event.target.value })} /></label>{action === "change" && <><label className="portal-field"><span>Reason</span><textarea value={requestForm.reason} onChange={(event) => setRequestForm({ ...requestForm, reason: event.target.value })} /></label>{requestForm.kind === "price_change" && <label className="portal-field"><span>Proposed budget ({proposal.currency})</span><input inputMode="decimal" value={requestForm.proposedBudget} onChange={(event) => { setRequestForm({ ...requestForm, proposedBudget: event.target.value }); setBudgetError(""); }} placeholder="1,234.56" />{budgetError && <small className="portal-inline-error">{budgetError}</small>}</label>}{requestForm.kind === "payment_term_change" && <label className="portal-field"><span>Proposed payment terms</span><textarea value={requestForm.proposedPaymentTerms} onChange={(event) => setRequestForm({ ...requestForm, proposedPaymentTerms: event.target.value })} /></label>}</>}{error && <p className="portal-inline-error" role="alert">{error}</p>}<p className="portal-muted">Sending a request does not change the published proposal. Any new terms require a revised version and your acceptance.</p><button className="portal-action portal-primary" disabled={busy}>{busy ? "Sending…" : action === "change" ? "Send change request" : "Send question"}</button></form>}
       {action === "decline" && <form className="portal-form" onSubmit={(event) => void decline(event)}><p className="portal-muted">You can optionally share a reason. This response will be recorded against version {data.version.label}.</p><label className="portal-field"><span>Reason (optional)</span><textarea value={declineReason} onChange={(event) => setDeclineReason(event.target.value)} /></label>{error && <p className="portal-inline-error" role="alert">{error}</p>}<button className="portal-action portal-danger" disabled={busy}>{busy ? "Recording…" : "Confirm decline"}</button></form>}
     </section></div>}
-    {documentHtml && <div className="portal-document-overlay"><div className="portal-doc-bar"><strong>Proposal document</strong><div className="button-row"><button className="portal-action portal-secondary" onClick={() => downloadDocument(documentHtml, `${proposal.title}-document`)}>Save a copy</button><button className="portal-action portal-secondary" onClick={() => { try { printDocument(documentFrame.current); } catch (issue) { setError(issue instanceof Error ? issue.message : "The document could not be printed."); } }}>Print</button><button className="portal-action portal-secondary" onClick={() => setDocumentHtml("")}>Close</button></div></div><iframe ref={documentFrame} title="Proposal document preview" sandbox="allow-scripts allow-modals" srcDoc={documentHtml} /></div>}
+    {documentHtml && <div className="portal-document-overlay"><div className="portal-doc-bar"><strong className="portal-doc-title">{documentTitle}</strong><div className="portal-doc-actions"><button className="portal-action portal-primary" onClick={() => { try { printDocument(documentFrame.current); } catch (issue) { setError(issue instanceof Error ? issue.message : "The document could not be printed."); } }}>Print</button><button className="portal-action portal-secondary" onClick={() => downloadDocument(documentHtml, `${proposal.title}-${documentTitle}`)}>Save a copy</button><button className="portal-close" aria-label="Close document preview" onClick={() => setDocumentHtml("")}>×</button></div></div><iframe ref={documentFrame} title={`${documentTitle} preview`} sandbox="allow-scripts allow-modals" srcDoc={documentHtml.replace("</head>", "<style>.bar.noprint{display:none!important}</style></head>")} /></div>}
   </main>;
 }
 
